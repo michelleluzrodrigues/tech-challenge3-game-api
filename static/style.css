@@ -1,0 +1,50 @@
+body, .stApp {
+    background-color: #000000;
+}
+.css-1d391kg {
+    background-color: #000000;
+    padding: 0px 20px;
+}
+.css-1d391kg, .stApp {
+    color: #FFFFFF;
+}
+.card-container {
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    color: #FFFFFF;
+}
+.card-container:hover {
+    transform: scale(1.1);
+    color: white;
+    background-color: #333333;
+}
+/* Ajuste o tamanho do selectbox */
+.css-16huue1 {
+    font-size: 14px;
+    padding: 5px 10px;
+    height: 35px;
+    width: 300px;  /* Definido para 300px de largura */
+    margin: 0 auto; /* Centralizar o selectbox */
+}
+/* Estilizar o botão para não ficar branco */
+.stButton>button {
+    background-color: red;
+    color: white;
+    font-size: 11px;
+    border-radius: 10px;
+    width: auto;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease;
+}
+.stButton>button:hover {
+    background-color: darkred;
+    color: white;
+}
+/* Garantir que o selectbox não exceda a largura da página */
+.css-1cpxqw2 {
+    max-width: 300px; /* Controla a largura máxima do selectbox */
+    margin: 0 auto;
+}
+/* Corrigir o scroll vertical excessivo */
+.css-1d391kg, .stApp {
+    overflow: hidden; /* Evitar o scroll excessivo */
+}
