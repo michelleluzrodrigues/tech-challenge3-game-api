@@ -1,9 +1,11 @@
 import boto3
 import os
+from datetime import datetime
 from dotenv import load_dotenv
 
 class S3Downloader:
     def __init__(self):
+        date = datetime.now().strftime('%Y-%m')
         load_dotenv()
 
         self.s3 = boto3.client(
@@ -13,7 +15,7 @@ class S3Downloader:
             aws_session_token=os.getenv('AWS_SESSION_TOKEN')
         )
         self.bucket_name = os.getenv('AWS_S3_BUCKET_NAME')
-        self.s3_base_key = f'anoMes=2024-09/'
+        self.s3_base_key = f'anoMes={date}/'
 
     def download_file(self, s3_key: str, local_path: str):
         """Faz o download de um arquivo do S3 para o caminho local especificado."""
