@@ -1,7 +1,37 @@
+import os
 import streamlit as st
 import pandas as pd
 import requests
 import cloudpickle
+from api.s3_downloader import S3Downloader 
+
+def download_files_if_needed():
+    s3_downloader = S3Downloader()
+
+    model_path = os.path.join('models', 'game_recommender.pkl')
+    games_path = os.path.join('data', 'games.csv')
+
+    if not os.path.exists(model_path):
+        st.write("Baixando modelo do S3...")
+        s3_downloader.download_model()
+
+    if not os.path.exists(games_path):
+        st.write("Baixando games.csv do S3...")
+        s3_downloader.download_csv()
+
+# Função para carregar o modelo
+@st.cache_resource
+def load_model():
+    model_path = os.path.join('models', 'game_recommender.pkl')
+    with open(model_path, 'rb') as f:
+        model = cloudpickle.load(f)
+    return model
+
+# Função para carregar o CSV
+@st.cache_data
+def load_games_data():
+    csv_path = os.path.join('data', 'games.csv')
+    return pd.read_csv(csv_path)
 
 # Função para carregar o CSS de um arquivo externo
 def load_css(file_name):
@@ -23,15 +53,16 @@ def fetch_game_poster(app_id):
     else:
         return "Imagem não disponível"
 
+download_files_if_needed()
+
 # Carregar o arquivo CSS externo
-load_css("../static/style.css")
+load_css(os.path.join("static", "style.css"))
 
 # Carregar o modelo de recomendação
-with open('../data/game_recommender.pkl', 'rb') as f:
-    recommender = cloudpickle.load(f)
+recommender = load_model()
 
 # Carregar a lista de jogos
-games = pd.read_csv("../data/games.csv")
+games = load_games_data()
 games_list = games['title'].values
 
 # Cabeçalho da aplicação
